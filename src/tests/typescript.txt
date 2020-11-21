@@ -1,0 +1,164 @@
+Script started on 2020-10-13 12:08:35+02:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="204" LINES="56"]
+]0;julien@julien-Swift-SF514-54T: ~/EURECOM/DBSys/minjava/javaminibase/src/tests[01;32mjulien@julien-Swift-SF514-54T[00m:[01;34m~/EURECOM/DBSys/minjava/javaminibase/src/tests[00m$ exitmake jointest
+/usr/lib/jvm/java-14-openjdk-amd64/bin/javac -classpath ./.. TestDriver.java JoinTest.java
+Note: JoinTest.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+/usr/lib/jvm/java-14-openjdk-amd64/bin/java  -classpath ./.. tests.JoinTest
+Replacer: Clock
+
+
+
+Any resemblance of persons in this database to people living or dead
+is purely coincidental. The contents of this database do not reflect
+the views of the University, the Computer  Sciences Department or the
+developers...
+
+**********************Query1 strating *********************
+Query: Find the names of sailors who have reserved boat number 1.
+       and print out the date of reservation.
+
+  SELECT S.sname, R.date
+  FROM   Sailors S, Reserves R
+  WHERE  S.sid = R.sid AND R.bid = 2
+
+
+(Tests FileScan, Projection, and Sort-Merge Join)
+[Mike Carey, 05/11/95]
+[Yannis Ioannidis, 05/10/95]
+
+Query1 completed successfully!
+*******************Query1 finished!!!*****************
+
+
+
+**********************Query2 strating *********************
+Query: Find the names of sailors who have reserved a red boat
+       and return them in alphabetical order.
+
+  SELECT   S.sname
+  FROM     Sailors S, Boats B, Reserves R
+  WHERE    S.sid = R.sid AND R.bid = B.bid AND B.color = 'red'
+  ORDER BY S.sname
+Plan used:
+ Sort (Pi(sname) (Sigma(B.color='red')  |><|  Pi(sname, bid) (S  |><|  R)))
+
+(Tests File scan, Index scan ,Projection,  index selection,
+ sort and simple nested-loop join.)
+
+After Building btree index on sailors.sid.
+
+[David Dewitt]
+[Mike Carey]
+[Raghu Ramakrishnan]
+[Yannis Ioannidis]
+
+Query2 completed successfully!
+*******************Query2 finished!!!*****************
+
+
+
+**********************Query3 strating *********************
+Query: Find the names of sailors who have reserved a boat.
+
+  SELECT S.sname
+  FROM   Sailors S, Reserves R
+  WHERE  S.sid = R.sid
+
+(Tests FileScan, Projection, and SortMerge Join.)
+
+[Mike Carey]
+[Mike Carey]
+[Mike Carey]
+[David Dewitt]
+[David Dewitt]
+[Jeff Naughton]
+[Miron Livny]
+[Yannis Ioannidis]
+[Raghu Ramakrishnan]
+[Raghu Ramakrishnan]
+
+Query3 completed successfully!
+*******************Query3 finished!!!*****************
+
+
+
+**********************Query4 strating *********************
+Query: Find the names of sailors who have reserved a boat
+       and print each name once.
+
+  SELECT DISTINCT S.sname
+  FROM   Sailors S, Reserves R
+  WHERE  S.sid = R.sid
+
+(Tests FileScan, Projection, Sort-Merge Join and Duplication elimination.)
+
+[David Dewitt]
+[Jeff Naughton]
+[Mike Carey]
+[Miron Livny]
+[Raghu Ramakrishnan]
+[Yannis Ioannidis]
+
+Query4 completed successfully!
+*******************Query4 finished!!!*****************
+
+
+
+**********************Query5 strating *********************
+Query: Find the names of old sailors or sailors with a rating less
+       than 7, who have reserved a boat, (perhaps to increase the
+       amount they have to pay to make a reservation).
+
+  SELECT S.sname, S.rating, S.age
+  FROM   Sailors S, Reserves R
+  WHERE  S.sid = R.sid and (S.age > 40 || S.rating < 7)
+
+(Tests FileScan, Multiple Selection, Projection, and Sort-Merge Join.)
+
+[Mike Carey, 9, 40.3]
+[Mike Carey, 9, 40.3]
+[Mike Carey, 9, 40.3]
+[David Dewitt, 10, 47.2]
+[David Dewitt, 10, 47.2]
+[Jeff Naughton, 5, 35.0]
+[Yannis Ioannidis, 8, 40.2]
+
+Query5 completed successfully!
+*******************Query5 finished!!!*****************
+
+
+
+**********************Query6 strating *********************
+Query: Find the names of sailors with a rating greater than 7
+  who have reserved a red boat, and print them out in sorted order.
+
+  SELECT   S.sname
+  FROM     Sailors S, Boats B, Reserves R
+  WHERE    S.sid = R.sid AND S.rating > 7 AND R.bid = B.bid 
+           AND B.color = 'red'
+  ORDER BY S.name
+
+Plan used:
+ Sort(Pi(sname) (Sigma(B.color='red')  |><|  Pi(sname, bid) (Sigma(S.rating > 7)  |><|  R)))
+
+(Tests FileScan, Multiple Selection, Projection,sort and nested-loop join.)
+
+After nested loop join S.sid|><|R.sid.
+After nested loop join R.bid|><|B.bid AND B.color=red.
+After sorting the output tuples.
+[David Dewitt]
+[Mike Carey]
+[Raghu Ramakrishnan]
+[Yannis Ioannidis]
+
+Query6 completed successfully!
+*******************Query6 finished!!!*****************
+
+
+
+Finished joins testing
+join tests completed successfully
+]0;julien@julien-Swift-SF514-54T: ~/EURECOM/DBSys/minjava/javaminibase/src/tests[01;32mjulien@julien-Swift-SF514-54T[00m:[01;34m~/EURECOM/DBSys/minjava/javaminibase/src/tests[00m$ make jointestexit[K
+exit
+
+Script done on 2020-10-13 12:08:40+02:00 [COMMAND_EXIT_CODE="0"]
