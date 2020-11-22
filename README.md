@@ -1,21 +1,24 @@
-# Java Minibase Project 
+# Java Minibase Project LAB 2
 
-## Lab 2
+## Introduction
 The objective of this lab is to create different replacer, such as LRU, FIFO, LIFO and LRU-k methods  
+We use the minibase project, which is a database management system intended for educational use.
 
-- This project is used as part of the DBSys course, of the Data Science branch of EURECOM
+- This project is used as part of the DBSys course, of the Data Science branch of [EURECOM](https://eurecom.fr)
 
 - Contributors : **Julien THOMAS and Eliot CALIMEZ**
 
 ## LRU
 In this method, we always update the buffer when we pin a page. For example, if page p was consulted 20 pages ago, then there are 10 pages, and our buffer is of size 20, then page p will not be the victim, because it was used more recently. In the FIFO method, page p would have been the victim (if it is not pinned).
+this methos was already inplemented [here](src/bufmgr/LRU.java)
 
 ## FIFO 
 The difference with the LRU method is in the pin method. We update the buffer only if the frame is a new frame : 
 ```
 if(!Arrays.stream(this.frames).anyMatch(x -> x == frameNo) )
 	update(frameNo);
-```
+```  
+You can access the class [here](src/bufmgr/FIFO.java)
 
 
 ## LIFO 
@@ -34,6 +37,8 @@ for ( int i = numBuffers - 1; i >=0  ; --i ) {
     }
 }
 ```
+You can access the class [here](src/bufmgr/LIFO.java)
+
 
 ## LRUK 
 
@@ -44,7 +49,7 @@ LRUK object contains 4 variables :
 > nframes is the number of frames used, between 0 and the length of frames array  
 > histories contains the histories of the pages already passed in the buffer  
 
-HIST object contains the k last references for one frame in the buffer  
+[HIST](src/bufmgr/HIST.java) object contains the k last references for one frame in the buffer  
 	references are the timestamp of the moment of the page is pinned
 ### How it works ?
 
@@ -53,6 +58,8 @@ When we pin a new frame, we update the buffer pool, and the history of its frame
 
 #### Pick a victim method
 To pick a victim, we need to find the oldest reference of all frames that aren't pinned. we browse all the histories for each frames, and keep the oldest reference. If all the pages are pinned, we throw a BufferPoolExceededException
+
+You can access the class [here](src/bufmgr/LRUK.java)
 
 
 ## TIPS 
