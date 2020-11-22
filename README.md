@@ -64,3 +64,16 @@ You can access the class [here](src/bufmgr/LRUK.java)
 
 ## TIPS 
 > the file Code/copyCode.sh is a script file to update *.java files in Code folder with the class used in src/bufmgr
+
+
+## Problems  
+- When we execute the test script, we have an error in the console, which not depends of our implemented code : 
+```
+bufmgr.HashEntryNotFoundException: BUFMGR: HASH_NOT_FOUND.
+	at bufmgr.BufMgr.unpinPage(BufMgr.java:617)
+	at tests.BMDriver.test4(BMTest2020.java:690)
+	at tests.BMDriver.runAllTests(BMTest2020.java:117)
+	at tests.BMDriver.runTests(BMTest2020.java:88)
+	at tests.BMTest2020.main(BMTest2020.java:786)
+```
+We have tried to debug this error, and we have find that te error occurrs in the `lookup` method of Bufmgr class, where `ht[hash(pageNo)]` is always null.
