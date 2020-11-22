@@ -10,7 +10,7 @@ We use the minibase project, which is a database management system intended for 
 
 ## LRU
 In this method, we always update the buffer when we pin a page. For example, if page p was consulted 20 pages ago, then there are 10 pages, and our buffer is of size 20, then page p will not be the victim, because it was used more recently. In the FIFO method, page p would have been the victim (if it is not pinned).
-this methos was already inplemented [here](src/bufmgr/LRU.java)
+this method was already inplemented [here](src/bufmgr/LRU.java)
 
 ## FIFO 
 The difference with the LRU method is in the pin method. We update the buffer only if the frame is a new frame : 
@@ -60,7 +60,34 @@ When we pin a new frame, we update the buffer pool, and the history of its frame
 To pick a victim, we need to find the oldest reference of all frames that aren't pinned. we browse all the histories for each frames, and keep the oldest reference. If all the pages are pinned, we throw a BufferPoolExceededException
 
 You can access the class [here](src/bufmgr/LRUK.java)
-
+#### Correlated Reference implementation 
+To prevent if a page is already pinned for the same transaction, we implément the correlated delay, which using to hasn't taken into account a page for `pick_victim` method if the reference come from the same request.
+To implément it, we just define a delay for correlated referces in HIST object : 
+```
+	/**
+	 * The period in millisecond, where whe consider that references are correlated
+	 */
+	private int CORRELATED_REFERENCE_PERIOD = 100;
+```
+Next, we need a method to say at pick_victim method of LRU object if a page is correlated or not
+```
+	public boolean isNotCorrelated(long ref)
+	{
+		return(ref - getLast() > CORRELATED_REFERENCE_PERIOD);
+	}
+```
+And we update the pick_victim method : 
+```
+	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() <= min && hist.isNotCorrelated(System.currentTimeMillis())) {
+```
+Then, when we update the history of a page, we verified if the last reference is correlated, and in this case, ce replace this last reference with the new reference. In `addReference` method of HIST, we add :
+```
+if(references.size()> 0  && ref - references.get(references.size()-1) < CORRELATED_REFERENCE_PERIOD) {
+			references.set(references.size()-1, ref);
+			return;
+		}
+```
+**This implementation is visible on the branch correlated_reference_implementation of this repository.**
 
 ## TIPS 
 > the file Code/copyCode.sh is a script file to update *.java files in Code folder with the class used in src/bufmgr
