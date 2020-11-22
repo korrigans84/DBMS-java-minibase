@@ -2,7 +2,7 @@ package bufmgr;
 
 import java.util.Arrays;
 
-public class FIFO extends Replacer {
+public class LIFO extends Replacer {
 
 	  /**
 	   * private field
@@ -18,7 +18,7 @@ public class FIFO extends Replacer {
 	  private int  nframes;
 	  
 	  
-	protected FIFO(BufMgr javamgr) {
+	protected LIFO(BufMgr javamgr) {
 		super(javamgr);
 		frames = null;
 	}
@@ -26,7 +26,7 @@ public class FIFO extends Replacer {
 	@Override
 	public String name() {
 		
-		return "FIFO";
+		return "LIFO";
 	}	
 	
 	
@@ -62,7 +62,7 @@ public class FIFO extends Replacer {
 		    return frame;
 		}
 		
-		for ( int i = 0; i < numBuffers  ; ++i ) {
+		for ( int i = numBuffers - 1; i >=0  ; --i ) {
 		     frame = frames[i];
 		    if ( state_bit[frame].state != Pinned ) {
 		        state_bit[frame].state = Pinned;

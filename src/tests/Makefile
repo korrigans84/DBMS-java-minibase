@@ -8,9 +8,9 @@ JAVA  = $(JDKPATH)/bin/java  -classpath $(CLASSPATH)
 # test buffer manager
 
 BMTest:BMTest.java
-	$(JAVAC) TestDriver.java BMTest.java
+	$(JAVAC) TestDriver.java BMTest2020.java
 
-bmtest: BMTest
+bmtest: BMTest2020
 	$(JAVA) tests.BMTest2020
 
 # test disk manager

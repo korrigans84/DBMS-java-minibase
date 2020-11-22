@@ -159,9 +159,9 @@ class BufHashTbl implements GlobalConst{
         return INVALID_PAGE;
       
       for (ent=ht[hash(pageNo)]; ent!=null; ent=ent.next) {
-        if (ent.pageNo.pid == pageNo.pid) {
-	  return(ent.frameNo);
-        }
+        if (ent.pageNo.pid == pageNo.pid) 
+        	return(ent.frameNo);
+        
       }
       
       return(INVALID_PAGE);
@@ -445,6 +445,11 @@ public class BufMgr implements GlobalConst{
 	    replacer = new FIFO(this);
 	    System.out.println("Replacer: FIFO\n");
 	  }
+	else if(replacerArg.compareTo("LIFO")==0)
+	  {
+	    replacer = new LIFO(this);
+	    System.out.println("Replacer: LIFO\n");
+	  }
 	else if(replacerArg.compareTo("LRUK")==0)
 	  {
 	    replacer = new LRUK(this);
@@ -581,7 +586,6 @@ public class BufMgr implements GlobalConst{
 	
 	page.setpage(bufPool[frameNo]);
 	replacer.pin(frameNo);
-	
       }
     }
   
@@ -605,12 +609,11 @@ public class BufMgr implements GlobalConst{
 	   HashEntryNotFoundException, 
 	   InvalidFrameNumberException
     {
-      
+
       int frameNo;
-      
       frameNo=hashTable.lookup(PageId_in_a_DB);
-      
       if (frameNo<0){
+    	  
 	throw new HashEntryNotFoundException (null, "BUFMGR: HASH_NOT_FOUND.");
       }
       

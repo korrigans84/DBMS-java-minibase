@@ -11,9 +11,6 @@ public class LRUK extends  Replacer {
 	//Value of k in LRU-K method
 	private int k;
 	
-	//the id of the current page
-	public int pageid;
-	
 	  /**
 	   * private field
 	   * number of frames used
@@ -27,9 +24,26 @@ public class LRUK extends  Replacer {
 	protected LRUK(BufMgr javamgr) {
 		super(javamgr);
 	      frames = null;
+	      k=3;
 		this.histories = new ArrayList<HIST>();
 		
 	}
+	  /**
+	   * Calling super class the same method
+	   * Initializing the frames[] with number of buffer allocated
+	   * by buffer manager
+	   * set number of frame used to zero
+	   *
+	   * @param	mgr	a BufMgr object
+	   * @see	BufMgr
+	   * @see	Replacer
+	   */
+	    public void setBufferManager( BufMgr mgr )
+	     {
+	        super.setBufferManager(mgr);
+		frames = new int [ mgr.getNumBuffers() ];
+		nframes = 0;
+	     }
 	
 	
 	  /**
@@ -42,11 +56,11 @@ public class LRUK extends  Replacer {
 	   */
 	 public void pin(int frameNo) throws InvalidFrameNumberException
 	 {
-	    super.pin(frameNo);
-
+	 	
+		    super.pin(frameNo);
 	    update(frameNo);
 	    updateHistory(frameNo);
-	    
+
 	 }
 	
 	  /**
@@ -55,6 +69,8 @@ public class LRUK extends  Replacer {
 	   */
 	  private void update(int frameNo)
 	  {
+		  if(frames.length == 1 ) 
+			  return;
 	     int index;
 	     for ( index=0; index < nframes; ++index ) {
 	         if ( frames[index] == frameNo ) 
@@ -76,19 +92,20 @@ public class LRUK extends  Replacer {
 	   */
 	  private void updateHistory(int frame)
 	  {
+		  try {
+			  HIST history = getHistOfAPage(frame);
+			  history.addReference();
+			  return;
+		  }catch(InvalidFrameNumberException e)
+		  {
+			  //if the page is't already in the buffer
+			  HIST hist = new HIST(frame, k);
 
-		  for(HIST hist : histories) {
-			  if(hist.getFrame() == frame) {
-				  hist.addReference();
-				  return;
-			  }
+			  hist.addReference();
+			  histories.add(hist);
 		  }
 
-		  //if the page is't already in the buffer
-		  HIST hist = new HIST(frame, k);
-
-		  hist.addReference();
-		  histories.add(hist);
+		 
 
 		  
 	  }
@@ -111,19 +128,18 @@ public class LRUK extends  Replacer {
 	    }
 	    int victim = -1;
 	    long min = System.currentTimeMillis(); //initialize with the current timeStamp
-	    for ( int i = 0; i < histories.size(); ++i ) {
-    		HIST hist = histories.get(i);
+	    for (HIST hist : histories) {
 	        frame = hist.getFrame();
-	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() < min) {
+	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() <= min) {
 	            min = hist.getOldestReference();
 	            victim = frame;
 	        }
 	        
 	    }
 	    
-	    if(victim < 0 )
+	    if(victim < 0 ) {
 	    	throw new BufferPoolExceededException(null, "CAN'T FIND A VICTIM FRAME IN THE BUFFER ");
-
+	    }
 	    (mgr.frameTable())[victim].pin();
         state_bit[victim].state = Pinned;
         update(victim);
@@ -133,22 +149,7 @@ public class LRUK extends  Replacer {
 	    return victim;
 	}
 	
-	  /**
-	   * Calling super class the same method
-	   * Initializing the frames[] with number of buffer allocated
-	   * by buffer manager
-	   * set number of frame used to zero
-	   *
-	   * @param	mgr	a BufMgr object
-	   * @see	BufMgr
-	   * @see	Replacer
-	   */
-	    public void setBufferManager( BufMgr mgr )
-	     {
-	        super.setBufferManager(mgr);
-		frames = new int [ mgr.getNumBuffers() ];
-		nframes = 0;
-	     }
+	
 
 	@Override
 	public String name() {
@@ -180,8 +181,7 @@ public class LRUK extends  Replacer {
 	
 	private HIST getHistOfAPage(int frame) throws InvalidFrameNumberException 
 	{
-		for(int i = 0 ; i< histories.size() ; i++) {
-			HIST history = histories.get(i);
+		for(HIST history : histories) {
 			if( history.getFrame() == frame) 
 				return(history);
 			

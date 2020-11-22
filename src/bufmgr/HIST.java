@@ -14,7 +14,7 @@ public class HIST {
 	public HIST(int pageid, int k) {
 		this.references = new ArrayList<>();
 		this.k = k;
-		this.frame = frame;
+		this.frame = pageid;
 	}
 	
 	public void addReference() {
@@ -37,7 +37,14 @@ public class HIST {
 	}
 	
 	public long getOldestReference() {
-		return references.get(0);
+		try {
+			return references.get(0);
+		}catch(Exception e) {
+			//if there is not reference in the history, 
+			//we return the current time. In this case, 
+			//we know that this page isn't the oldest in the buffer
+			return System.currentTimeMillis();
+		}
 	}
 	
 	/**
@@ -61,9 +68,7 @@ public class HIST {
 				references.remove(i);
 				return;
 			}
-				
 		}
-		
 		throw new InvalidFrameNumberException(null, "BAD HISTORY REFERENCE");
 	}
 	
