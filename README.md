@@ -49,3 +49,7 @@ When we pin a new frame, we update the buffer pool, and the history of its frame
 
 #### Pick a victim method
 To pick a victim, we need to find the oldest reference of all frames that aren't pinned. we browse all the histories for each frames, and keep the oldest reference. If all the pages are pinned, we throw a BufferPoolExceededException
+
+
+## TIPS 
+> the file Code/copyCode.sh is a script file to update *.java files in Code folder with the class used in src/bufmgr
