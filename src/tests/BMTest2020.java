@@ -8,6 +8,27 @@ import bufmgr.*;
 import diskmgr.*;
 import chainexception.*;
 
+public class BMTest2020 {
+
+   public static void main (String argv[]) {
+
+     BMDriver bmt = new BMDriver();
+     boolean dbstatus;
+
+     dbstatus = bmt.runTests();
+
+     if (dbstatus != true) {
+       System.err.println ("Error encountered during buffer manager tests:\n");
+       Runtime.getRuntime().exit(1);
+     }
+
+     Runtime.getRuntime().exit(0);
+     
+   }
+}
+
+
+
 //Note that in JAVA, methods can't be overridden to be more private.
 //Therefore, the declaration of all private functions are now declared
 //protected as opposed to the private type in C++.
@@ -776,21 +797,4 @@ SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
   }
 }
 
-public class BMTest2020 {
-
-   public static void main (String argv[]) {
-
-     BMDriver bmt = new BMDriver();
-     boolean dbstatus;
-
-     dbstatus = bmt.runTests();
-
-     if (dbstatus != true) {
-       System.err.println ("Error encountered during buffer manager tests:\n");
-       Runtime.getRuntime().exit(1);
-     }
-
-     Runtime.getRuntime().exit(0);
-   }
-}
 

@@ -3,14 +3,15 @@ JDKPATH = /usr/lib/jvm/java-14-openjdk-amd64
 LIBPATH = ./..
 CLASSPATH = $(LIBPATH)
 BINPATH = $(JDKPATH)/bin
-JAVAC = $(JDKPATH)/bin/javac -classpath $(CLASSPATH)
+JAVAC = javac -classpath $(CLASSPATH)
 JAVA  = $(JDKPATH)/bin/java  -classpath $(CLASSPATH)
+
 # test buffer manager
 
-BMTest:BMTest.java
+BMTest:BMTest2020.java
 	$(JAVAC) TestDriver.java BMTest2020.java
 
-bmtest: BMTest2020
+bmtest: BMTest
 	$(JAVA) tests.BMTest2020
 
 # test disk manager
