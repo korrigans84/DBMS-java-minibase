@@ -1,7 +1,6 @@
 package bufmgr;
 
 import java.util.ArrayList;
-import java.awt.FlowLayout;
 
 public class LRUK extends  Replacer {
 
@@ -10,6 +9,9 @@ public class LRUK extends  Replacer {
 	
 	//Value of k in LRU-K method
 	private int k;
+	
+	
+
 	
 	  /**
 	   * private field
@@ -130,7 +132,7 @@ public class LRUK extends  Replacer {
 	    long min = System.currentTimeMillis(); //initialize with the current timeStamp
 	    for (HIST hist : histories) {
 	        frame = hist.getFrame();
-	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() <= min) {
+	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() <= min && hist.isNotCorrelated(System.currentTimeMillis())) {
 	            min = hist.getOldestReference();
 	            victim = frame;
 	        }

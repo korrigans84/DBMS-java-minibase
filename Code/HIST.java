@@ -9,6 +9,11 @@ public class HIST {
 	//the id of the current page
 	private int frame;
 	
+	/**
+	 * The period in millisecond, where whe consider that references are correlated
+	 */
+	private int CORRELATED_REFERENCE_PERIOD = 100;
+	
 	private ArrayList<Long> references;
 	
 	public HIST(int pageid, int k) {
@@ -17,8 +22,18 @@ public class HIST {
 		this.frame = pageid;
 	}
 	
+	
+	/**
+	 * If the references are correlated, we just replace the last reference in the history with a new reference
+	 */
 	public void addReference() {
 		long ref = System.currentTimeMillis();
+		
+		
+		if(references.size()> 0  && ref - references.get(references.size()-1) < CORRELATED_REFERENCE_PERIOD) {
+			references.set(references.size()-1, ref);
+			return;
+		}
 		if(references.size() != k)
 			references.add(ref);
 		else //here, we have to update the list of references, for insert the new reference
@@ -94,7 +109,10 @@ public class HIST {
 			throw new InvalidFrameNumberException(null, "INDEX OUT OF BOUND FOR THE METHOD HIST(page, index)");
 		return references.get(i-1);
 	}
-	
+	public boolean isNotCorrelated(long ref)
+	{
+		return(ref - getLast() > CORRELATED_REFERENCE_PERIOD);
+	}
 	
 	
 	
