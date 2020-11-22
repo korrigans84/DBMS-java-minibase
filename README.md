@@ -5,14 +5,14 @@ The objective of this lab is to create different replacer, such as LRU, FIFO, LI
 ## LRUK 
 
 ### Structure : 
-	LRUK object contains 4 variables : 
-		k contain the K value for the algorithm
-		frames in an array which is the buffer pool. This length is 				defined by mgr.getNumBuffers()
-		nframes is the number of frames used, between 0 and the 				length of frames array
-		histories contains the histories of the pages already passed 				in the buffer
+LRUK object contains 4 variables : 
+> k contain the K value for the algorithm
+> frames in an array which is the buffer pool. This length is defined by mgr.getNumBuffers()
+> nframes is the number of frames used, between 0 and the length of frames array
+> histories contains the histories of the pages already passed in the buffer
 
-	HIST object contains the k last references for one frame in the 			buffer
-		references are the timestamp of the moment of the page is 		pinned
+HIST object contains the k last references for one frame in the buffer  
+	references are the timestamp of the moment of the page is pinned
 ### How its works ?
 
 #### PIN method
