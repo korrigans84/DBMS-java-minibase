@@ -67,7 +67,7 @@ You can access the class [here](src/bufmgr/LRUK.java)
 
 
 ## Problems  
-- When we execute the test script, we have an error in the console, which not depends of our implemented code : 
+- When we execute the test script, we have an error in the console during the Test 4, which not depends of our implemented code : 
 ```
 bufmgr.HashEntryNotFoundException: BUFMGR: HASH_NOT_FOUND.
 	at bufmgr.BufMgr.unpinPage(BufMgr.java:617)
