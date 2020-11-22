@@ -6,7 +6,7 @@ We use the minibase project, which is a database management system intended for 
 
 - This project is used as part of the DBSys course, of the Data Science branch of [EURECOM](https://eurecom.fr)
 
-- Contributors : **Julien THOMAS and Eliot CALIMEZ**
+- Contributors : Group C : **Julien THOMAS (julien.thomas@eurecom.fr) and Eliot CALIMEZ (eliot.calimez@eurecom.fr)**
 
 ## LRU
 In this method, we always update the buffer when we pin a page. For example, if page p was consulted 20 pages ago, then there are 10 pages, and our buffer is of size 20, then page p will not be the victim, because it was used more recently. In the FIFO method, page p would have been the victim (if it is not pinned).
