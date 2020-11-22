@@ -2,6 +2,35 @@
 
 ## Lab 2
 The objective of this lab is to create different replacer, such as LRU, FIFO, LIFO and LRU-k methods
+
+## LRU
+In this method, we always update the buffer when we pin a page. For example, if page p was consulted 20 pages ago, then there are 10 pages, and our buffer is of size 20, then page p will not be the victim, because it was used more recently. In the FIFO method, page p would have been the victim (if it is not pinned).
+
+## FIFO 
+The difference with the LRU method is in the pin method. We update the buffer only if the frame is a new frame : 
+```
+if(!Arrays.stream(this.frames).anyMatch(x -> x == frameNo) )
+	update(frameNo);
+```
+
+
+## LIFO 
+
+### Differences with LIFO method
+The only difference is when we pick a victim.  
+Instead of retrieving the first unpinned page from the buffer, we retrieve the last which was inserted in the buffer, and which is not pinned.
+```
+for ( int i = numBuffers - 1; i >=0  ; --i ) {
+     frame = frames[i];
+    if ( state_bit[frame].state != Pinned ) {
+	state_bit[frame].state = Pinned;
+	(mgr.frameTable())[frame].pin();
+	update(frame);
+	return frame;
+    }
+}
+```
+
 ## LRUK 
 
 ### Structure : 
