@@ -876,7 +876,6 @@ public class BufMgr implements GlobalConst{
 
 
 public LRUK getReplacer() {
-	// TODO Auto-generated method stub
 	return (LRUK) replacer;
 }
 

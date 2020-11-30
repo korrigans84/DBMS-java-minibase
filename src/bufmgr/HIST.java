@@ -10,7 +10,7 @@ public class HIST {
 	private int frame;
 	
 	/**
-	 * The period in millisecond, where whe considers that references are correlated
+	 * The period in millisecond, where whe consider that references are correlated
 	 */
 	private int CORRELATED_REFERENCE_PERIOD = 100;
 	
