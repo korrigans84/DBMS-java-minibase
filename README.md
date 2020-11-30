@@ -79,9 +79,9 @@ Next, we need a method to say at pick_victim method of LRU object if a page is c
 ```
 And we update the pick_victim method : 
 ```
-	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() <= min && hist.isNotCorrelated(System.currentTimeMillis())) {
+	        if ( state_bit[frame].state != Pinned && hist.getOldestReference() <= min && hist.isNotCorrelated(System.currentTimeMillis()))
 ```
-Then, when we update the history of a page, we verified if the last reference is correlated, and in this case, ce replace this last reference with the new reference. In `addReference` method of HIST, we add :
+Then, when we update the history of a page, we verify if the last reference is correlated, and in this case, we replace this last reference with the new one. In `addReference` method of HIST, we add :
 ```
 if(references.size()> 0  && ref - references.get(references.size()-1) < CORRELATED_REFERENCE_PERIOD) {
 			references.set(references.size()-1, ref);
@@ -95,7 +95,9 @@ if(references.size()> 0  && ref - references.get(references.size()-1) < CORRELAT
 
 
 ## Problems  
-- When we execute the test script, we have an error in the console during the Test 4, which not depends of our implemented code : 
+**EDIT :** With the new Test4, there is no problem anymore. 
+
+- When we execute the test script, we have an error in the console during the Test 4, which does not depend of our implemented code : 
 ```
 bufmgr.HashEntryNotFoundException: BUFMGR: HASH_NOT_FOUND.
 	at bufmgr.BufMgr.unpinPage(BufMgr.java:617)
@@ -104,6 +106,4 @@ bufmgr.HashEntryNotFoundException: BUFMGR: HASH_NOT_FOUND.
 	at tests.BMDriver.runTests(BMTest2020.java:88)
 	at tests.BMTest2020.main(BMTest2020.java:786)
 ```
-We have tried to debug this error, and we have find that te error occurrs in the `lookup` method of Bufmgr class, where `ht[hash(pageNo)]` is always null.
-**EDIT :**  
-With the new Test4, there is not problem in more. 
+We have tried to debug this error, and we have find that the error occurs in the `lookup` method of Bufmgr class, where `ht[hash(pageNo)]` is always null.
