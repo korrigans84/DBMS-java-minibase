@@ -1,5 +1,5 @@
-Script started on 2020-11-22 11:37:53+01:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="205" LINES="54"]
-]0;julien@Matrix: ~/Documents/EURECOM/DBSys/minjava/javaminibase/src/tests[01;32mjulien@Matrix[00m:[01;34m~/Documents/EURECOM/DBSys/minjava/javaminibase/src/tests[00m$ make bmtest 
+Script started on 2020-11-30 19:33:31+01:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="205" LINES="56"]
+]0;julien@Matrix: ~/Documents/EURECOM/DBSys/minjava/javaminibase/src/tests[01;32mjulien@Matrix[00m:[01;34m~/Documents/EURECOM/DBSys/minjava/javaminibase/src/tests[00m$ gedit Melox\ Portfolio\ Stock\ Breakdown_20102020\ en\ cour\ de\ modif.csv [39Pit commit -m "login form, comments"edit Melox\ Portfolio\ Stock\ Breakdown_20102020\ en\ cour\ de\ modif.csv [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kmake bmtest 
 javac -classpath ./.. TestDriver.java BMTest2020.java
 /usr/lib/jvm/java-14-openjdk-amd64/bin/java  -classpath ./.. tests.BMTest2020
 
@@ -126,4 +126,4 @@ bufmgr.HashEntryNotFoundException: BUFMGR: HASH_NOT_FOUND.
 
 ]0;julien@Matrix: ~/Documents/EURECOM/DBSys/minjava/javaminibase/src/tests[01;32mjulien@Matrix[00m:[01;34m~/Documents/EURECOM/DBSys/minjava/javaminibase/src/tests[00m$ exit
 
-Script done on 2020-11-22 11:38:03+01:00 [COMMAND_EXIT_CODE="0"]
+Script done on 2020-11-30 19:33:54+01:00 [COMMAND_EXIT_CODE="0"]
